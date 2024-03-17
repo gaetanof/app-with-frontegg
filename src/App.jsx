@@ -24,6 +24,7 @@ function App() {
   };
 
   const handleClick = () => {
+    console.log(AdminPortal);
     AdminPortal.show();
   };
 
@@ -38,15 +39,10 @@ function App() {
             <span>Logged in as: {user?.name}</span>
           </div>
           <div>
-            <button onClick={() => alert(user.accessToken)}>
-              What is my access token?
-            </button>
-          </div>
-          <div>
             <button onClick={() => logout()}>Click to logout</button>
           </div>
           <div>
-            <button onClick={() => handleClick()}>View full profile</button>
+            <button onClick={() => handleClick()}>Settings</button>
           </div>
         </div>
       ) : (
