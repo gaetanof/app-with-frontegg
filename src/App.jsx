@@ -1,7 +1,8 @@
 import './App.css';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import {
   useAuth,
+  useAuthActions,
   useLoginWithRedirect,
   ContextHolder,
   AdminPortal,
@@ -10,13 +11,18 @@ import {
 function App() {
   const { user, isAuthenticated } = useAuth();
   const loginWithRedirect = useLoginWithRedirect();
+  const { switchTenant } = useAuthActions();
+  const [selectedTenantId, setSelectedTenantId] = useState('');
 
   // Uncomment this to redirect to login automatically
   useEffect(() => {
     if (!isAuthenticated) {
       loginWithRedirect();
+    } else {
+      // Establece el tenantId inicial como el tenant activo actual del usuario
+      setSelectedTenantId(user?.tenantId);
     }
-  }, [isAuthenticated, loginWithRedirect]);
+  }, [isAuthenticated, loginWithRedirect, user?.tenantId]);
 
   const logout = () => {
     const baseUrl = ContextHolder.getContext().baseUrl;
@@ -28,30 +34,36 @@ function App() {
     AdminPortal.show();
   };
 
+  const handleSwitchTenant = (e) => {
+    const newTenantId = e.target.value;
+    switchTenant({ tenantId: newTenantId });
+    setSelectedTenantId(newTenantId); // Actualiza el estado con el nuevo tenantId seleccionado
+  };
+
   return (
     <div className="App">
       {isAuthenticated ? (
-        <div>
+        <>
           <div>
             <img src={user?.profilePictureUrl} alt={user?.name} />
-          </div>
-          <div>
             <span>Logged in as: {user?.name}</span>
+            <button onClick={logout}>Click to logout</button>
+            <button onClick={handleClick}>Settings</button>
           </div>
-          <div>
-            <button onClick={() => logout()}>Click to logout</button>
-          </div>
-          <div>
-            <button onClick={() => handleClick()}>Settings</button>
-          </div>
-        </div>
+          {user?.tenantIds && (
+            <select value={selectedTenantId} onChange={handleSwitchTenant}>
+              {user.tenantIds.map((tenantId) => (
+                <option key={tenantId} value={tenantId}>
+                  Tenant ID: {tenantId}
+                </option>
+              ))}
+            </select>
+          )}
+        </>
       ) : (
-        <div>
-          <button onClick={() => loginWithRedirect()}>Click me to login</button>
-        </div>
+        <button onClick={loginWithRedirect}>Click me to login</button>
       )}
     </div>
   );
 }
-
 export default App;
