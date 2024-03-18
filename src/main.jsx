@@ -1,3 +1,5 @@
+// HOSTED;
+
 import ReactDOM from 'react-dom/client';
 import App from './App.jsx';
 import './index.css';
@@ -22,3 +24,31 @@ root.render(
     <App />
   </FronteggProvider>
 );
+
+//EMBEDDED
+
+// import React from 'react';
+// import ReactDOM from 'react-dom/client';
+// import App from './App';
+// import './index.css';
+
+// import { FronteggProvider } from '@frontegg/react';
+
+// const contextOptions = {
+//   baseUrl: 'https://app-y7i7twzeyimf.frontegg.com',
+// };
+
+// const authOptions = {
+//   // keepSessionAlive: true // Uncomment this in order to maintain the session alive
+// };
+
+// const root = ReactDOM.createRoot(document.getElementById('root'));
+// root.render(
+//   <FronteggProvider
+//     contextOptions={contextOptions}
+//     hostedLoginBox={true}
+//     authOptions={authOptions}
+//   >
+//     <App />
+//   </FronteggProvider>
+// );

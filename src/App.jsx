@@ -1,3 +1,5 @@
+//HOSTED
+
 import './App.css';
 import { useEffect, useState } from 'react';
 import {
@@ -23,6 +25,7 @@ function App() {
       setSelectedTenantId(user?.tenantId);
     }
   }, [isAuthenticated, loginWithRedirect, user?.tenantId]);
+  console.log(loginWithRedirect);
 
   const logout = () => {
     const baseUrl = ContextHolder.getContext().baseUrl;
@@ -67,3 +70,40 @@ function App() {
   );
 }
 export default App;
+
+//EMBEDDED
+
+// import React from 'react';
+// import { useAuthUser, useTenantsState, useAuthActions } from '@frontegg/react';
+
+// function App() {
+//   const { user, isAuthenticated } = useAuth(); // Use this to avoid redirect to /account/login
+
+//   return (
+//     <div className="App">
+//       {isAuthenticated ? (
+//         <>
+//           <div>
+//             <img src={user?.profilePictureUrl} alt={user?.name} />
+//             <span>Logged in as: {user?.name}</span>
+//             <button onClick={logout}>Click to logout</button>
+//             <button onClick={handleClick}>Settings</button>
+//           </div>
+//           {user?.tenantIds && (
+//             <select value={selectedTenantId} onChange={handleSwitchTenant}>
+//               {user.tenantIds.map((tenantId) => (
+//                 <option key={tenantId} value={tenantId}>
+//                   Tenant ID: {tenantId}
+//                 </option>
+//               ))}
+//             </select>
+//           )}
+//         </>
+//       ) : (
+//         <button onClick={loginWithRedirect}>Click me to login</button>
+//       )}
+//     </div>
+//   );
+// }
+
+// export default App;
