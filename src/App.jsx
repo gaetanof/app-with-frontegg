@@ -16,12 +16,10 @@ function App() {
   const { switchTenant } = useAuthActions();
   const [selectedTenantId, setSelectedTenantId] = useState('');
 
-  // Uncomment this to redirect to login automatically
   useEffect(() => {
     if (!isAuthenticated) {
       loginWithRedirect();
     } else {
-      // Establece el tenantId inicial como el tenant activo actual del usuario
       setSelectedTenantId(user?.tenantId);
     }
   }, [isAuthenticated, loginWithRedirect, user?.tenantId]);
